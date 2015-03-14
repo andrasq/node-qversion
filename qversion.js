@@ -1,5 +1,8 @@
 /**
  * qversion -- basic version number management
+-*
+ * Copyright (C) 2015 Andras Radics
+ * Licensed under the Apache License, Version 2.0
  *
  * 2015-03-11 - AR.
  */
@@ -40,8 +43,7 @@ function isPrefix( prefix, string ) {
  * test whether the version pattern p matches the version v
  * Patterns can look like "~1.1", "1.1.*", "1.1.7"
  */
-function version_match( p, v ) {
-    // FIXME: match pattern p to version v
+function version_match( v, p ) {
     if (p.indexOf(',') >= 0) {
         // comma-list of patterns, match any one
         var patterns = p.split(',');
@@ -74,9 +76,12 @@ function version_match( p, v ) {
         if (p[1] === '=') return version_match(v, p.slice(2)) <= 0;
         else return version_match(v, p.slice(1)) < 0;
     }
+    else if ([0] === '=') {
+        return version_compare(v, p.slice(1)) == 0;
+    }
     else {
         // exact match is default, ie 1.1 does not match 1.1.7
-        return version_compare(p, v);
+        return version_compare(v, p) == 0;
     }
     return false;
 }
@@ -115,66 +120,3 @@ QVersion.prototype = {
         this.compareCache = {};
     },
 };
-
-// quicktest:
-
-///**
-
-assert = require('assert');
-
-data = [
-    ['', '', 0],
-    ['', '1', -1],
-    ['1', '', 1],
-    ['1', '1', 0],
-    ['1', '2', -1],
-    ['1', '0', 1],
-    ['2', '10', -1],
-    ['10', '2', 1],
-    ['1.1', '1.1', 0],
-    ['1.1', '1.2', -1],
-    ['1.1', '1.0', 1],
-    ['1.1', '1.0.1', 1],
-    ['1.1', '1.1.0', -1],       // TBD: match or not?
-    ['1.1', '1.1.1', -1],
-    ['1.2', '1.10', -1],
-    ['1.10', '1.2', 1],
-    ['1.1.1', '1.1.1', 0],
-    ['1.1.1', '1.1.2', -1],
-    ['1.1.1', '1.1.0', 1],
-    ['1.1.2', '1.1.10', -1],
-    ['1.2.1', '1.1.10', 1],
-    ['1.1.1', '1.1.1.1', -1],
-];
-for (i=0; i<data.length; i++) {
-    var diff = version_compare(data[i][0], data[i][1]);
-    switch (data[i][2]) {
-    case -1:
-        assert(diff < 0,  data[i][0] + " .lt. " + data[i][1] + ", was " + diff);
-        break;
-    case 0:
-        assert(diff == 0, data[i][0] + " .eq. " + data[i][1] + ", was " + diff);
-        break;
-    case 1:
-        assert(diff > 0,  data[i][0] + " .gt. " + data[i][1] + ", was " + diff);
-        break;
-    }
-}
-
-timeit = require('arlib/timeit');
-
-var a = "1.2.3";
-var b = "1.2.3";
-var x;
-timeit(1000000, function(){ x = version_compare(a, b) });
-console.log(x);
-// 3.8m/s split (3.4m/s as floats)
-
-vc = new QVersion();
-timeit(1000000, function(){ x = vc.compare(a, b) });
-console.log(x);
-// 25m/s
-
-timeit(1000000, function(){ x = vc.match(a, b) });
-
-/**/

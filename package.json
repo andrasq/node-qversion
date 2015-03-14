@@ -1,6 +1,6 @@
 {
   "name": "qversion",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "main": "qversion.js",
   "description": "quick version number comparator",
   "author": "andras@andrasq.com",

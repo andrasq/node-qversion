@@ -25,6 +25,7 @@ of dotted fields, but npm and node use exactly 3.
 
 compare the two version numbers, return less than zero if ver1 is less than
 ver2, 0 if they are the same, greater than zero if ver1 is greater than ver2.
+A match has to be exact, `1` is not `1.0` is not `1.0.0`.
 
 ### QVersion.version_match( version, pattern )
 
@@ -38,6 +39,9 @@ comma-separated list of match templates.  Each template may be a:
         >1.1            relative match (also >=, <, <=)
         *               any version (wildcard match)
 
+The semantics of approximate match are not yet well defined; currently it is
+implemented as a prefix match.
+
 ### qv = new QVersion( )
 
 QVersion object caches results to speed repeated lookups
@@ -46,7 +50,7 @@ QVersion object caches results to speed repeated lookups
 
 cached version_compare
 
-### qv.match( patt, ver )
+### qv.match( ver, patt )
 
 cached version_match
 

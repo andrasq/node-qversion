@@ -37,6 +37,7 @@ module.exports = {
                 ['1.2.1', '1.1.10', 1],
                 ['1.1.1', '1.1.1.1', -1],
             ];
+            var i;
             for (i=0; i<cases.length; i++) {
                 var diff = version_compare(cases[i][0], cases[i][1]);
                 diff = diff < 0 ? -1 : diff == 0 ? 0 : 1;
@@ -56,6 +57,21 @@ module.exports = {
     },
 
     'version_match': {
+        'should match versions': function(t) {
+            cases = [
+                // version, pattern, yes/no
+                ['1.1.3', '1', true],
+                ['1.1.3', '1.1', true],
+                ['1.1.3', '1.1.3', true],
+                ['1.1.3', '1.1.2', false],
+            ];
+            var i;
+            for (i=0; i<cases.length; i++) {
+                var cmp = version_match(cases[i][0], cases[i][1]);
+                t.equal(cmp, cases[i][2], cases[i][0] + " :: " + cases[i][1] + " => " + cmp);
+            }
+            t.done();
+        },
     },
 
     'QVersion': {

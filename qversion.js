@@ -1,6 +1,6 @@
 /**
  * qversion -- basic version number management
--*
+ *
  * Copyright (C) 2015 Andras Radics
  * Licensed under the Apache License, Version 2.0
  *
@@ -10,6 +10,7 @@
 module.exports = QVersion;
 
 QVersion.version_compare = version_compare;
+QVersion.version_match = version_match;
 
 /**
  * compare two semantic version numbers a and b,
@@ -31,6 +32,7 @@ function version_compare( a, b ) {
     return 0;
 }
 
+// TODO: should args be in (s,p) order?
 function isPrefix( prefix, string ) {
     var len = prefix.length;
     for (var i=0; i<len; i++) {
@@ -80,8 +82,8 @@ function version_match( v, p ) {
         return version_compare(v, p.slice(1)) == 0;
     }
     else {
-        // exact match is default, ie 1.1 does not match 1.1.7
-        return version_compare(v, p) == 0;
+        // prefix match is default, ie 1.1 matches 1.1.*
+        return isPrefix(p, v);
     }
     return false;
 }

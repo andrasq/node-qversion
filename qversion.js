@@ -59,9 +59,13 @@ function version_match( v, p ) {
         var pp = p.split('-');
         return version_compare(pp[0], v) >= 0 && version_compare(v, pp[1]) <= 0;
     }
-    else if (p.indexOf('*') >= 0) {
+    else if (p.indexOf('.*') >= 0) {
         // prefix match: 1.1.* matches 1.1.7 but not 1.2.0
-        return isPrefix(p.slice(0, p.indexOf('*')), v);
+        return isPrefix(p.slice(0, p.indexOf('.*')), v);
+    }
+    else if (p.indexOf('.x') >= 0) {
+        // prefix match: 1.1.x matches 1.1.7 but not 1.2.0
+        return isPrefix(p.slice(0, p.indexOf('.x')), v);
     }
     else if (p[0] === '~') {
         // prefix match: ~1.1 matches 1.1.7 but not 1.2.0

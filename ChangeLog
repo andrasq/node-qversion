@@ -1,3 +1,8 @@
+0.2.1
+
+- only match * when preceded by . as .*
+- match .x like .*
+
 0.2.0
 
 - change version_match() to prefix-match by default, ie have version 1.1.3 match pattern 1.1

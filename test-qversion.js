@@ -60,6 +60,9 @@ module.exports = {
         'should match versions': function(t) {
             cases = [
                 // version, pattern, yes/no
+                ['1', '*', true],
+                ['1.2', '*', true],
+                ['1.2.3', '*', true],
                 ['1.1.3', '1', true],
                 ['1.1.3', '1.1', true],
                 ['1.1.3', '1.1.3', true],

@@ -3,7 +3,9 @@
   "version": "0.3.0",
   "main": "qversion.js",
   "description": "quick version number comparator",
-  "author": "andras@andrasq.com",
+  "author": {
+    "name": "andras@andrasq.com"
+  },
   "license": "Apache-2.0",
   "repository": {
     "url": "git://github.com/andrasq/node-qversion",

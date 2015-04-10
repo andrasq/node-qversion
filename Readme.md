@@ -75,5 +75,5 @@ cached version_match
 
 ## Related Work
 
-[semver](https://npmjs.org/package/semver)
-[semver.org](http://semver.org)
+- [semver](https://npmjs.org/package/semver)
+- [semver.org](http://semver.org)

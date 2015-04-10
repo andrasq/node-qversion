@@ -20,7 +20,7 @@ of dotted fields, but npm and node use exactly 3.
         npm install qversion
         qunit test-qversion.js
 
-Benchmark
+If you already have semver installed, you can run the benchmark:
 
         node node_modules/qversion/benchmark.js
 

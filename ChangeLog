@@ -4,6 +4,7 @@
 - match version v1.1 to 1.1
 - allow whitespace in match templates
 - fix "*" matching
+- benchmark.js
 
 0.2.1
 

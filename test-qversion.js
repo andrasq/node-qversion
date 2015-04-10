@@ -67,6 +67,8 @@ module.exports = {
                 ['1.1.3', '1.1', true],
                 ['1.1.3', '1.1.3', true],
                 ['1.1.3', '1.1.2', false],
+                ['1', '1|2', true],
+                ['v1.1', '1.2 || 1', true],
             ];
             var i;
             for (i=0; i<cases.length; i++) {

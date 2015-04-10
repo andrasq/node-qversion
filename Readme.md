@@ -14,10 +14,15 @@ of dotted fields, but npm and node use exactly 3.
         ver.match("1.1.3", "1.1.*");                    // => true
         ver.match("1.1.3", "1.1.2,1.1.3");              // => true
 
+
 ## Installation
 
         npm install qversion
-        node_modules/.bin/qunit test-qversion.js
+        qunit test-qversion.js
+
+Benchmark
+
+        node node_modules/qversion/benchmark.js
 
 ## Functions
 
@@ -37,7 +42,6 @@ comma-separated list of templates.  Each template may be a:
         1.1.1-1.1.7     range match
         1.1.*           prefix match
         1.1             prefix match (same as 1.1.*)
-        ~1.1            approximate version, TBD (does prefix match)
         >1.1            relative match (also >=, <, <=)
         *               any version (wildcard match)
 
@@ -57,9 +61,19 @@ cached version_compare
 cached version_match
 
 
+## Limitations
+
+- QVersion does not implement full [SemVer](http://semver.org) semantics
+- patch suffixes (eg 1.2.1-patch3) are not supported
+
 ## Todo
 
 - unit test version_match
 - unit test QVersion
 - write a version_select() that returns best match of desired vs available
 - support non-numeric version numbers?
+
+## Related Work
+
+[semver](https://npmjs.org/package/semver)
+[semver.org](http://semver.org)

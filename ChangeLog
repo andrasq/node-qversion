@@ -1,3 +1,10 @@
+0.3.0
+
+- match 1.1 on =1.1 and v1.1 syntax
+- match version v1.1 to 1.1
+- allow whitespace in match templates
+- fix "*" matching
+
 0.2.1
 
 - only match * when preceded by . as .*

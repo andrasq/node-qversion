@@ -46,11 +46,22 @@ function isPrefix( prefix, string ) {
  * Patterns can look like "~1.1", "1.1.*", "1.1.7"
  */
 function version_match( v, p ) {
-    if (p.indexOf(',') >= 0) {
+    function trim(s) { return s.trim() }
+
+    v = v.trim();
+    if (v[0] === 'v') v = v.slice(1);
+
+    // "" means any version, leading = or v or =v is ignored
+    p = p.trim();
+    if (p[0] === '=') p = p.slice(1);
+    if (p[0] === 'v') p = p.slice(1);
+    if (p === "") p = "*";
+
+    if (p.indexOf(',') >= 0 || p.indexOf('|') >= 0) {
         // comma-list of patterns, match any one
-        var patterns = p.split(',');
+        var patterns = p.split(/,|\|/);
         for (var i=0; i<patterns.length; i++) {
-            if (version_match(patterns[i], v)) return true;
+            if (patterns[i] && version_match(v, patterns[i])) return true;
         }
         return false;
     }
@@ -72,18 +83,21 @@ function version_match( v, p ) {
     }
     else if (p[0] === '~') {
         // prefix match: ~1.1 matches 1.1.7 but not 1.2.0
-        // TODO: bracket the max distance?
+        // FIXME: ~1.1.3 should match 1.1.7 but not 1.1.2
+        // TODO: ~1.1 should match 1.1.7 and 1.2.0 but not 1.0.9
+        var lastDot = p.lastIndexOf('.');
+        if (lastDot >= 0) return isPrefix(p.slice(1, lastDot), v);
         return isPrefix(p.slice(1), v);
     }
     else if (p[0] === '>') {
         // version v is at least p (>=) or greater than p (>)
-        if (p[1] === '=') return version_match(p.slice(2), v) >= 0;
-        else return version_match(p.slice(1), v) > 0;
+        if (p[1] === '=') return version_compare(p.slice(2), v) >= 0;
+        else return version_compare(p.slice(1), v) > 0;
     }
     else if (p[0] === '<') {
         // version v is at most p (<=) or less than p (<)
-        if (p[1] === '=') return version_match(v, p.slice(2)) <= 0;
-        else return version_match(v, p.slice(1)) < 0;
+        if (p[1] === '=') return version_compare(v, p.slice(2)) <= 0;
+        else return version_compare(v, p.slice(1)) < 0;
     }
     else if ([0] === '=') {
         return version_compare(v, p.slice(1)) == 0;
@@ -94,6 +108,7 @@ function version_match( v, p ) {
     }
     return false;
 }
+
 
 function QVersion( ) {
     this.compareCache = {};

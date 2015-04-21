@@ -68,7 +68,7 @@ function version_match( v, p ) {
     else if (p.indexOf('-') >= 0) {
         // range match (inclusive), both endpoints must match
         var pp = p.split('-');
-        return version_compare(pp[0], v) >= 0 && version_compare(v, pp[1]) <= 0;
+        return version_compare(pp[0].trim(), v) >= 0 && version_compare(v, pp[1].trim()) <= 0;
     }
     else if (p === '*') {
         return true;
@@ -91,16 +91,16 @@ function version_match( v, p ) {
     }
     else if (p[0] === '>') {
         // version v is at least p (>=) or greater than p (>)
-        if (p[1] === '=') return version_compare(p.slice(2), v) >= 0;
-        else return version_compare(p.slice(1), v) > 0;
+        if (p[1] === '=') return version_compare(p.slice(2).trim(), v) >= 0;
+        else return version_compare(p.slice(1).trim(), v) > 0;
     }
     else if (p[0] === '<') {
         // version v is at most p (<=) or less than p (<)
-        if (p[1] === '=') return version_compare(v, p.slice(2)) <= 0;
-        else return version_compare(v, p.slice(1)) < 0;
+        if (p[1] === '=') return version_compare(v, p.slice(2).trim()) <= 0;
+        else return version_compare(v, p.slice(1).trim()) < 0;
     }
     else if ([0] === '=') {
-        return version_compare(v, p.slice(1)) == 0;
+        return version_compare(v, p.slice(1).trim()) == 0;
     }
     else {
         // prefix match is default, ie 1.1 matches 1.1.*

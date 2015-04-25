@@ -8,7 +8,7 @@ numeric tuple in the form _major . minor . patch_.  QVersion allows any number
 of dotted fields, but npm and node use exactly 3.
 
         QVersion = require('qversion');
-        QVersion.version_compare("1.1.2", "1.1.3");     // => -1
+        QVersion.version_compare("1.1.2", "1.1.10");    // => -1
 
         ver = new QVersion();
         ver.match("1.1.3", "1.1.*");                    // => true
@@ -22,7 +22,11 @@ of dotted fields, but npm and node use exactly 3.
 
 If you already have semver installed, you can run the benchmark:
 
-        node node_modules/qversion/benchmark.js
+        $ node node_modules/qversion/benchmark.js
+        qversion match 23 true
+        semversion satisfies 368 true
+        qversion match 15 true
+        semversion satisfies 339 true
 
 ## Functions
 
@@ -41,11 +45,12 @@ comma-separated list of templates.  Each template may be a:
         1.1,1.2         comma-list of templates
         1.1.1-1.1.7     range match
         1.1.*           prefix match
+        1.1.x           prefix match (same as 1.1.*)
         1.1             prefix match (same as 1.1.*)
         >1.1            relative match (also >=, <, <=)
         *               any version (wildcard match)
 
-The semantics of approximate match are not yet well defined; currently it is
+The semantics of approximate match `~1.1` are not yet well defined; currently it is
 implemented as a prefix match.
 
 ### qv = new QVersion( [options] )

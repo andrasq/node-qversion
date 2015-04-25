@@ -1,6 +1,12 @@
+0.4.1
+
+- use QVersion.version_compare and QVersion.version_match internally,
+  in case the class functions are redefined
+
 0.4.0
 
-- pass in compare and match functions to QVersion
+- make QVersion accept passed-in compare and match functions, to allow caching
+  the results of other version comparators
 
 0.3.1
 

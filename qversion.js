@@ -47,6 +47,7 @@ function isPrefix( prefix, string ) {
  */
 function version_match( v, p ) {
     function trim(s) { return s.trim() }
+    var version_compare = QVersion.version_compare;
 
     v = v.trim();
     if (v[0] === 'v') v = v.slice(1);
@@ -112,8 +113,8 @@ function version_match( v, p ) {
 
 function QVersion( options ) {
     if (!options) options = {}
-    this.version_compare = options.version_compare || version_compare;
-    this.version_match = options.version_match || version_match;
+    this.version_compare = options.version_compare || QVersion.version_compare;
+    this.version_match = options.version_match || QVersion.version_match;
 
     this.compareCache = {};
     this.matchCache = {};

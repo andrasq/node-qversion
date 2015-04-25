@@ -110,7 +110,11 @@ function version_match( v, p ) {
 }
 
 
-function QVersion( ) {
+function QVersion( options ) {
+    if (!options) options = {}
+    this.version_compare = options.version_compare || version_compare;
+    this.version_match = options.version_match || version_match;
+
     this.compareCache = {};
     this.matchCache = {};
 }
@@ -119,11 +123,11 @@ QVersion.prototype = {
     function compare( a, b) {
         if (this.compareCache[a]) {
             var diff = this.compareCache[a][b];
-            return (diff !== undefined) ? diff : this.compareCache[a][b] = version_compare(a, b);
+            return (diff !== undefined) ? diff : this.compareCache[a][b] = this.version_compare(a, b);
         }
         else {
             this.compareCache[a] = {};
-            return this.compareCache[a][b] = version_compare(a, b);
+            return this.compareCache[a][b] = this.version_compare(a, b);
         }
     },
 
@@ -131,11 +135,11 @@ QVersion.prototype = {
     function match( a, b ) {
         if (this.matchCache[a]) {
             var diff = this.matchCache[a][b];
-            return (diff !== undefined) ? diff : this.matchCache[a][b] = version_match(a, b);
+            return (diff !== undefined) ? diff : this.matchCache[a][b] = this.version_match(a, b);
         }
         else {
             this.matchCache[a] = {};
-            return this.matchCache[a][b] = version_match(a, b);
+            return this.matchCache[a][b] = this.version_match(a, b);
         }
     },
 

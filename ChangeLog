@@ -1,3 +1,7 @@
+0.4.0
+
+- pass in compare and match functions to QVersion
+
 0.3.1
 
 - better whitespace handling

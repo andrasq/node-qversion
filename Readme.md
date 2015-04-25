@@ -48,9 +48,14 @@ comma-separated list of templates.  Each template may be a:
 The semantics of approximate match are not yet well defined; currently it is
 implemented as a prefix match.
 
-### qv = new QVersion( )
+### qv = new QVersion( [options] )
 
 QVersion object caches results to speed repeated lookups
+
+Options:
+
+- `version_compare` - function that compares two versions and returns -1, 0 or 1 as above
+- `version_match` - function that matches a version against a pattern as above
 
 ### qv.compare( ver1, ver2 )
 

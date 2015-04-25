@@ -85,11 +85,28 @@ module.exports = {
             done();
         },
 
+        'should use passed-in compare and match functions and caches results': function(t) {
+            var called = 0;
+            var qv = new QVersion({
+                version_compare: function(a,b){ called += 1; return 0; },
+                version_match: function(a,b){ called += 1; return 0; },
+            });
+            qv.compare("1.2.3", "1.2");
+            t.equal(called, 1, "called our compare");
+            qv.match("1.2.3", "~1");
+            t.equal(called, 2, "called our match");
+            qv.compare("1.2.3", "1.2");
+            t.equal(called, 2, "cached compare result");
+            qv.match("1.2.3", "~1");
+            t.equal(called, 2, "cached match result");
+            t.done();
+        },
+
         'speed of 100k compares': function(t) {
             var a = "1.2.3", b = "1.2.4";
             var i, x, qv = this.qv;
             for (i=0; i<100000; i++) x = qv.compare(a, b);
-            // 4ms for 100k
+            // 3.6ms for 100k
             t.done();
         },
     },

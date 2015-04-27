@@ -23,10 +23,10 @@ of dotted fields, but npm and node use exactly 3.
 If you already have semver installed, you can run the benchmark:
 
         $ node node_modules/qversion/benchmark.js
-        qversion match 23 true
-        semversion satisfies 368 true
-        qversion match 15 true
-        semversion satisfies 339 true
+        qversion match: 23 ms
+        semversion satisfies: 368 ms
+        qversion match: 16 ms
+        semversion satisfies: 330 ms
 
 ## Functions
 

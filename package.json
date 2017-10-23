@@ -18,6 +18,9 @@
     "versioning",
     "version"
   ],
+  "scripts": {
+    "test": "qnit test*"
+  },
   "devDependencies": {
     "qnit": "*"
   }
